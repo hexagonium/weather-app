@@ -2,6 +2,7 @@ package com.example.weatherapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -98,11 +102,24 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            tvResult.setText(result);
+            try {
+                JSONObject json = new JSONObject(result);
+
+                String city = "Город: " + json.getString("name");
+                String temp = "\nТемпература: " + Math.round(json.getJSONObject("main").getDouble("temp")) + " °C";
+                String desc = "\nОписание: " + json.getJSONObject("weather").getJSONObject("0").getString("description");
+                String humid = "\nВлажность воздуха: " + json.getJSONObject("main").getInt("humidity") + "%";
+                String wind = "\nСкорость ветра: " + json.getJSONObject("wind").getInt("speed") + " м/с";
+
+                tvResult.setText(city + temp + desc + humid + wind);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

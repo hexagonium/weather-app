@@ -1,1 +1,2 @@
-Моё второе приложение под Android на языке Java\IDE Android Studio
+Моё второе приложение под Android на языке Java.\
+IDE Android Studio.

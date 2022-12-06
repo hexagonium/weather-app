@@ -2,4 +2,6 @@
     <string name="app_name">WeatherApp</string>
     <string name="header">Погода в вашем городе</string>
     <string name="hint_enter_city">Введите ваш город</string>
+    <string name="find_result">Узнать погоду</string>
+    <string name="no_user_input">Введите город!</string>
 </resources>

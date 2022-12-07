@@ -37,7 +37,7 @@
         android:layout_below="@id/et_enter_city"
         android:layout_alignStart="@+id/et_enter_city"
         android:layout_alignEnd="@+id/et_enter_city"
-        android:layout_marginHorizontal="60dp"
+        android:layout_marginHorizontal="40dp"
         android:layout_marginTop="40dp"
         android:backgroundTint="@color/black"
         android:text="@string/find_result" />

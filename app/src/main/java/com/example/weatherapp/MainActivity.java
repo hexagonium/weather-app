@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), R.string.no_user_input, Toast.LENGTH_LONG).show();
                 } else {
                     String city = etEnterCity.getText().toString();
-                    String key = "68b44ddd02afc52d41a1e49d46809440&";
+                    String key = "68b44ddd02afc52d41a1e49d46809440";
                     String url = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + key + "&units=metric&lang=ru";
 
                     new GetWeatherData().execute(url);
@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class GetWeatherData extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
@@ -81,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 return buffer.toString();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -112,11 +111,11 @@ public class MainActivity extends AppCompatActivity {
 
                 String city = "Город: " + json.getString("name");
                 String temp = "\nТемпература: " + Math.round(json.getJSONObject("main").getDouble("temp")) + " °C";
-                String desc = "\nОписание: " + json.getJSONObject("weather").getJSONObject("0").getString("description");
+                String desc = "\nОписание: " + json.getJSONArray("weather").getJSONObject(0).getString("description");
                 String humid = "\nВлажность воздуха: " + json.getJSONObject("main").getInt("humidity") + "%";
                 String wind = "\nСкорость ветра: " + json.getJSONObject("wind").getInt("speed") + " м/с";
 
-                tvResult.setText(city + temp + desc + humid + wind);
+                tvResult.setText(city + desc + temp + humid + wind);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
         btnFindResult = (Button) findViewById(R.id.btn_find_result);
         tvResult = (TextView) findViewById(R.id.tv_result);
 
+        // Обработка кнопки "Узнать погоду"
+        // Если пользователь ничего не ввёл, то появлятся сообщение пользователю о вводе города
+        // Если пользователь ввёл название города, то происходит формирование URL адреса и отправка за данными на сервер
         btnFindResult.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,8 +55,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // Класс для ассинхронного выполнения получения данных по API (openweatherapi)
     @SuppressLint("StaticFieldLeak")
     private class GetWeatherData extends AsyncTask<String, String, String> {
+        // Перед выполнением запроса вывод текста об ожидании данных на экран
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -61,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             tvResult.setText("Ожидайте...");
         }
 
+        // Отправка запроса и получение данных погоды с сервера
         @Override
         protected String doInBackground(String... strings) {
             HttpURLConnection connection = null;
@@ -101,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
 
+        // Обработка полученного JSON результата и вывод на экран
         @SuppressLint("SetTextI18n")
         @Override
         protected void onPostExecute(String result) {
